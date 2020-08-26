@@ -44,17 +44,18 @@ int getWorkingHours(int attendance)
     const int PART_TIME_HOURS = 4;
     const int ABSENT_HOURS = 0;
 
-    if (attendance == FULL_TIME)
+    switch (attendance)
     {
-        cout << "EMPLOYEE IS PRESENT FULL TIME AND ";
-        return FULL_DAY_HOURS;
-    }
-    else if (attendance == PART_TIME)
-    {
+    case PART_TIME:
         cout << "EMPLOYEE IS PRESENT PART TIME AND ";
         return PART_TIME_HOURS;
-    }
 
-    cout << "EMPLOYEE IS ABSENT AND ";
-    return ABSENT_HOURS;
+    case FULL_TIME:
+        cout << "EMPLOYEE IS PRESENT FULL TIME AND ";
+        return FULL_DAY_HOURS;
+
+    default:
+        cout << "EMPLOYEE IS ABSENT AND ";
+        return ABSENT_HOURS;
+    }
 }
