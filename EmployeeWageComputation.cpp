@@ -5,26 +5,28 @@ using namespace std;
 int getDailyWage(int);
 inline int getAttendance();
 int getDailyWorkingHours();
-void generateMonthlyWage(int);
+void generateMonthlyWage(int, int);
 
 int main()
 {
     cout << "WELCOME TO EMPLOYEE WAGE COMPUTATION PROGRAM." << endl;
 
     const int MAX_WORKING_DAYS = 20;
-    generateMonthlyWage(MAX_WORKING_DAYS);
+    const int MAX_WORKING_HOURS = 100;
+    generateMonthlyWage(MAX_WORKING_DAYS, MAX_WORKING_HOURS);
 
     return 0;
 }
 
-void generateMonthlyWage(int MAX_WORKING_DAYS)
+void generateMonthlyWage(int MAX_WORKING_DAYS, int MAX_WORKING_HOURS)
 {
     srand(time(0)); //setting seed for random function in order to get different random values for attendance.
-    int dayCount = 0, monthlyWage = 0;
+    int dayCount = 0, monthlyWage = 0 , hoursCount = 0;
 
-    while (dayCount < MAX_WORKING_DAYS)
+    while (dayCount < MAX_WORKING_DAYS && hoursCount < MAX_WORKING_HOURS)
     {
         int dailyHours = getDailyWorkingHours();
+        hoursCount += dailyHours;
         monthlyWage += getDailyWage(dailyHours);
         dayCount++;
     }
