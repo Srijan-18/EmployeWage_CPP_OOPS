@@ -2,32 +2,45 @@
 #include <ctime>
 using namespace std;
 
-int getAttendance();
-void generateDailyWage();
+int getDailyWage();
 int getWageByAttendanceAndRate(int, int);
-int getWorkingHours(int);
+inline int getWorkingHours(int);
+void generateMonthlyWage(int);
 
 int main()
 {
     cout << "WELCOME TO EMPLOYEE WAGE COMPUTATION PROGRAM." << endl;
-    generateDailyWage();
+    
+    const int MAX_WORKING_DAYS = 20;
+    generateMonthlyWage(MAX_WORKING_DAYS);
+
+    return 0;
 }
 
-void generateDailyWage()
+void generateMonthlyWage(int MAX_WORKING_DAYS)
+{
+    srand(time(0)); //setting seed for random function in order to get different random values for attendance.
+    int dayCount = 0, monthlyWage = 0;
+
+    while (dayCount < 20)
+    {
+        monthlyWage += getDailyWage();
+        dayCount++;
+    }
+
+    cout << "MONTHLY WAGE OF EMPLOYEE IS: " << monthlyWage << endl;
+}
+
+int getDailyWage()
 {
     const int WAGE_RATE = 20;
     int dailyWage = 0;
-    int attendance = getAttendance();
+    int attendance = rand() % 3;
 
     dailyWage = getWageByAttendanceAndRate(attendance, WAGE_RATE);
     cout << "DAILY WAGE OF EMPLOYEE IS: " << dailyWage << endl;
-}
 
-int getAttendance()
-{
-    srand(time(0));
-
-    return rand() % 3;
+    return dailyWage;
 }
 
 int getWageByAttendanceAndRate(int attendance, int rate)
@@ -36,7 +49,7 @@ int getWageByAttendanceAndRate(int attendance, int rate)
     return workingHours * rate;
 }
 
-int getWorkingHours(int attendance)
+inline int getWorkingHours(int attendance)
 {
     const int FULL_TIME = 1;
     const int PART_TIME = 2;
