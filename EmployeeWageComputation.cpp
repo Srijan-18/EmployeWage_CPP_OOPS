@@ -2,11 +2,41 @@
 #include <ctime>
 using namespace std;
 
-class EmployeeWage
+class Company
 {
-    const int MAX_WORKING_DAYS = 20;
-    const int MAX_WORKING_HOURS = 100;
-    const int WAGE_RATE = 20;
+    int MAX_WORKING_DAYS;
+    int MAX_WORKING_HOURS;
+    int WAGE_PER_HOUR;
+
+public:
+    Company(int maxWorkingDays, int maxWorkingHours, int WagePerHour)
+    {
+        MAX_WORKING_DAYS = maxWorkingDays;
+        MAX_WORKING_HOURS = maxWorkingHours;
+        WAGE_PER_HOUR = WagePerHour;
+    }
+
+    int getMaxWorkingDays()
+    {
+        return MAX_WORKING_DAYS;
+    }
+
+    int getMaxWorkingHours()
+    {
+        return MAX_WORKING_HOURS;
+    }
+
+    int getWagePerHour()
+    {
+        return WAGE_PER_HOUR;
+    }
+};
+
+class EmployeeWageCalculator
+{
+    int MAX_WORKING_DAYS;
+    int MAX_WORKING_HOURS;
+    int WAGE_RATE;
     int dailyWage = 0, dailyHours = 0;
     int dayCount = 0, monthlyWage = 0, hoursCount = 0;
 
@@ -39,7 +69,7 @@ class EmployeeWage
             cout << "EMPLOYEE IS ABSENT AND ";
             dailyHours = ABSENT_HOURS;
         }
-        
+
         return dailyHours;
     }
 
@@ -53,11 +83,19 @@ class EmployeeWage
 
 public:
     void generateMonthlyWage();
+
+    EmployeeWageCalculator(Company company)
+    {
+        MAX_WORKING_DAYS = company.getMaxWorkingDays();
+        MAX_WORKING_HOURS = company.getMaxWorkingHours();
+        WAGE_RATE = company.getWagePerHour();
+    }
 };
 
-void EmployeeWage::generateMonthlyWage()
+void EmployeeWageCalculator::generateMonthlyWage()
 {
     srand(time(0)); //setting seed for random function in order to get different random values for attendance.
+    
     while (dayCount < MAX_WORKING_DAYS && hoursCount < MAX_WORKING_HOURS)
     {
         hoursCount += generatedDailyWorkingHours();
@@ -71,8 +109,10 @@ void EmployeeWage::generateMonthlyWage()
 int main()
 {
     cout << "WELCOME TO EMPLOYEE WAGE COMPUTATION PROGRAM." << endl;
-
-    EmployeeWage employee;
+    
+    Company company(20, 100, 20);
+    
+    EmployeeWageCalculator employee(company);
     employee.generateMonthlyWage();
 
     return 0;
