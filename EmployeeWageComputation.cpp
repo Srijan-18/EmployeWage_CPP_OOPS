@@ -25,9 +25,7 @@ class EmployeeWageCalculator
         const int PART_TIME_HOURS = 4;
         const int ABSENT_HOURS = 0;
 
-        int attendance = getAttendance();
-
-        switch (attendance)
+        switch (getAttendance())
         {
         case PART_TIME:
             dailyHours = PART_TIME_HOURS;
@@ -116,7 +114,7 @@ void EmployeeWageCalculator::generateMonthlyWage()
     }
 }
 
-EmployeeWageCalculator* registerCompanies(EmployeeWageCalculator *employee)
+void registerCompanies(EmployeeWageCalculator *employee)
 {
 
     int company1Information[3] = {20, 100, 20};
@@ -127,8 +125,6 @@ EmployeeWageCalculator* registerCompanies(EmployeeWageCalculator *employee)
 
     employee->registerCompany(company1);
     employee->registerCompany(company2);
-
-    return employee;
 }
 
 int main()
@@ -137,7 +133,7 @@ int main()
 
     EmployeeWageCalculator employee;
 
-    employee = *registerCompanies(&employee);
+    registerCompanies(&employee);
 
     employee.generateMonthlyWage();
 
