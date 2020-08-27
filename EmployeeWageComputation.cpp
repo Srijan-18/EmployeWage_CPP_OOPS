@@ -66,20 +66,20 @@ class EmployeeWageCalculator
 
         for (int employee = 0; employee < currentCompany->employeeCounter; employee++)
         {
-            updateCalculationParameters(currentCompany->MAX_WORKING_DAYS, currentCompany->MAX_WORKING_HOURS, currentCompany->WAGE_PER_HOUR);
+            updateCalculationParameters(*currentCompany);
             generateWageForEmployee(&(currentCompany->employees[employee]));
             updateTotalWageOfCompany(currentCompany);
         }
     }
 
-    void updateCalculationParameters(int MaxWorkingDays, int MaxWorkingHours, int WagePerHour)
+    void updateCalculationParameters(Company currentCompany)
     {
         dayCount = 0;
         monthlyWage = 0;
         hoursCount = 0;
-        MAX_WORKING_DAYS = MaxWorkingDays;
-        MAX_WORKING_HOURS = MaxWorkingHours;
-        WAGE_PER_HOUR = WagePerHour;
+        MAX_WORKING_DAYS = currentCompany.MAX_WORKING_DAYS;
+        MAX_WORKING_HOURS = currentCompany.MAX_WORKING_HOURS;
+        WAGE_PER_HOUR = currentCompany.WAGE_PER_HOUR;
     }
 
     void generateWageForEmployee(Employee *employee)
