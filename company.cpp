@@ -9,7 +9,7 @@ public:
     int MAX_WORKING_DAYS;
     int MAX_WORKING_HOURS;
     int WAGE_PER_HOUR;
-
+    int totalWage;
     Company()
     {
     }
@@ -20,5 +20,6 @@ public:
         MAX_WORKING_DAYS = maxWorkingDays;
         MAX_WORKING_HOURS = maxWorkingHours;
         WAGE_PER_HOUR = WagePerHour;
+        totalWage = 0;
     }
 };

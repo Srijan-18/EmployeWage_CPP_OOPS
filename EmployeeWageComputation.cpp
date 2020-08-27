@@ -51,6 +51,10 @@ class EmployeeWageCalculator
         return dailyWage;
     }
 
+    void updateTotalWageOfCompany(int changeInValue){
+        company.totalWage += changeInValue;
+    }
+
 public:
     void generateMonthlyWage();
     void registerCompany(Company company);
@@ -77,7 +81,11 @@ void EmployeeWageCalculator::generateMonthlyWage()
         monthlyWage += getDailyWage();
         dayCount++;
     }
+    
     cout << "MONTHLY WAGE OF EMPLOYEE IS: " << monthlyWage << endl;
+
+    updateTotalWageOfCompany(monthlyWage);
+    cout << "TOTAL WAGE FOR COMPANY IS: " << company.totalWage << endl;
 }
 
 int main()
