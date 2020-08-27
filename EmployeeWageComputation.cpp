@@ -8,7 +8,9 @@ class EmployeeWageCalculator
 {
     int dailyWage = 0, dailyHours = 0;
     int dayCount, monthlyWage, hoursCount;
-    Company company;
+    int MAX_WORKING_DAYS, MAX_WORKING_HOURS, WAGE_PER_HOUR;
+    int companyCounter = 0;
+    Company company[5];
 
     inline int getAttendance()
     {
@@ -42,15 +44,13 @@ class EmployeeWageCalculator
 
     int getDailyWage()
     {
-        dailyWage = dailyHours * company.WAGE_PER_HOUR;
-        cout << "\t " << dayCount + 1 << "\t\t     " << dailyHours << "\t\t\t     " << dailyWage << endl;
-
+        dailyWage = dailyHours * WAGE_PER_HOUR;
         return dailyWage;
     }
 
-    void updateTotalWageOfCompany(int changeInValue)
+    void updateTotalWageOfCompany(Company *currentCompany)
     {
-        company.totalWage += changeInValue;
+        currentCompany->totalWage += monthlyWage;
     }
 
     void displayHeader()
@@ -60,6 +60,46 @@ class EmployeeWageCalculator
              << endl;
     }
 
+    void generateEmpWageForCompany(Company *currentCompany)
+    {
+        currentCompany->displayDetails();
+
+        for (int employee = 0; employee < currentCompany->employeeCounter; employee++)
+        {
+            updateCalculationParameters(currentCompany->MAX_WORKING_DAYS, currentCompany->MAX_WORKING_HOURS, currentCompany->WAGE_PER_HOUR);
+            generateWageForEmployee(&(currentCompany->employees[employee]));
+            updateTotalWageOfCompany(currentCompany);
+        }
+    }
+
+    void updateCalculationParameters(int MaxWorkingDays, int MaxWorkingHours, int WagePerHour)
+    {
+        dayCount = 0;
+        monthlyWage = 0;
+        hoursCount = 0;
+        MAX_WORKING_DAYS = MaxWorkingDays;
+        MAX_WORKING_HOURS = MaxWorkingHours;
+        WAGE_PER_HOUR = WagePerHour;
+    }
+
+    void generateWageForEmployee(Employee *employee)
+    {
+        while (dayCount < MAX_WORKING_DAYS && hoursCount < MAX_WORKING_HOURS)
+        {
+            hoursCount += generatedDailyWorkingHours();
+            monthlyWage += getDailyWage();
+            dayCount++;
+        }
+        employee->setMonthlyWage(monthlyWage);
+        employee->printDetails();
+    }
+
+    void registerEmployees()
+    {
+        for (int employee = 0; employee < 2; employee++)
+            company[companyCounter].registerEmployee("Employee_" + to_string(employee + 1));
+    }
+
 public:
     void generateMonthlyWage();
     void registerCompany(Company company);
@@ -67,44 +107,45 @@ public:
 
 void EmployeeWageCalculator::registerCompany(Company company)
 {
-    dayCount = 0;
-    monthlyWage = 0;
-    hoursCount = 0;
-    this->company = company;
+    this->company[companyCounter] = company;
+    registerEmployees();
+    companyCounter++;
 }
 
 void EmployeeWageCalculator::generateMonthlyWage()
 {
     srand(time(0)); //setting seed for random function in order to get different random values for attendance.
 
-    company.displayDetails();
-    displayHeader();
-    
-    while (dayCount < company.MAX_WORKING_DAYS && hoursCount < company.MAX_WORKING_HOURS)
+    for (int companyNumber = 0; companyNumber < companyCounter; companyNumber++)
     {
-        hoursCount += generatedDailyWorkingHours();
-        monthlyWage += getDailyWage();
-        dayCount++;
+        generateEmpWageForCompany(&company[companyNumber]);
+        cout << "\nTOTAL WAGE FOR COMPANY IS: " << company[companyNumber].totalWage << endl;
     }
+}
 
-    cout << "\nMONTHLY WAGE OF EMPLOYEE IS: " << monthlyWage << endl;
+EmployeeWageCalculator* registerCompanies(EmployeeWageCalculator *employee)
+{
 
-    updateTotalWageOfCompany(monthlyWage);
-    cout << "TOTAL WAGE FOR COMPANY IS: " << company.totalWage << endl;
+    int company1Information[3] = {20, 100, 20};
+    Company company1("Company1", company1Information);
+
+    int company2Information[3] = {10, 50, 50};
+    Company company2("Company2", company2Information);
+
+    employee->registerCompany(company1);
+    employee->registerCompany(company2);
+
+    return employee;
 }
 
 int main()
 {
     cout << "WELCOME TO EMPLOYEE WAGE COMPUTATION PROGRAM." << endl;
 
-    Company company1("Company1", 20, 100, 20);
-    Company company2("Company2", 10, 50, 50);
-
     EmployeeWageCalculator employee;
-    employee.registerCompany(company1);
-    employee.generateMonthlyWage();
 
-    employee.registerCompany(company2);
+    employee = *registerCompanies(&employee);
+
     employee.generateMonthlyWage();
 
     return 0;
