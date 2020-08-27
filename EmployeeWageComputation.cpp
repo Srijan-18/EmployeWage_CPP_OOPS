@@ -28,15 +28,12 @@ class EmployeeWageCalculator
         switch (attendance)
         {
         case PART_TIME:
-            cout << "EMPLOYEE IS PRESENT PART TIME AND ";
             dailyHours = PART_TIME_HOURS;
             break;
         case FULL_TIME:
-            cout << "EMPLOYEE IS PRESENT FULL TIME AND ";
             dailyHours = FULL_DAY_HOURS;
             break;
         default:
-            cout << "EMPLOYEE IS ABSENT AND ";
             dailyHours = ABSENT_HOURS;
         }
 
@@ -46,13 +43,21 @@ class EmployeeWageCalculator
     int getDailyWage()
     {
         dailyWage = dailyHours * company.WAGE_PER_HOUR;
-        cout << "CURRENT DAY'S WAGE OF EMPLOYEE IS: " << dailyWage << endl;
+        cout << "\t " << dayCount + 1 << "\t\t     " << dailyHours << "\t\t\t     " << dailyWage << endl;
 
         return dailyWage;
     }
 
-    void updateTotalWageOfCompany(int changeInValue){
+    void updateTotalWageOfCompany(int changeInValue)
+    {
         company.totalWage += changeInValue;
+    }
+
+    void displayHeader()
+    {
+        cout << "\n\tDAY\t\tWORKING HOURS\t\tTODAY'S WAGE" << endl;
+        cout << "\t===\t\t=============\t\t============\n"
+             << endl;
     }
 
 public:
@@ -72,17 +77,17 @@ void EmployeeWageCalculator::generateMonthlyWage()
 {
     srand(time(0)); //setting seed for random function in order to get different random values for attendance.
 
-    cout << "\n====================== " << company.companyName << " ======================\n"
-         << endl;
-
+    company.displayDetails();
+    displayHeader();
+    
     while (dayCount < company.MAX_WORKING_DAYS && hoursCount < company.MAX_WORKING_HOURS)
     {
         hoursCount += generatedDailyWorkingHours();
         monthlyWage += getDailyWage();
         dayCount++;
     }
-    
-    cout << "MONTHLY WAGE OF EMPLOYEE IS: " << monthlyWage << endl;
+
+    cout << "\nMONTHLY WAGE OF EMPLOYEE IS: " << monthlyWage << endl;
 
     updateTotalWageOfCompany(monthlyWage);
     cout << "TOTAL WAGE FOR COMPANY IS: " << company.totalWage << endl;

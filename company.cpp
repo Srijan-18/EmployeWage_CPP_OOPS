@@ -22,4 +22,13 @@ public:
         WAGE_PER_HOUR = WagePerHour;
         totalWage = 0;
     }
+
+    void displayDetails()
+    {
+        cout << "\n====================== " << this->companyName << " ======================\n"
+             << endl;
+        cout << "MAXIMUM WORKING DAYS: " << this->MAX_WORKING_DAYS << endl;
+        cout << "MAXIMUM WORKING HOURS: " << this->MAX_WORKING_HOURS << endl;
+        cout << "WAGE PER HOUR: " << this->WAGE_PER_HOUR << endl;
+    }
 };
