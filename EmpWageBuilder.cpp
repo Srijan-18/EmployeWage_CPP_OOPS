@@ -2,7 +2,6 @@
 #include <ctime>
 #include "IEmpWageBuilder.cpp"
 
-
 using namespace std;
 
 class EmployeeWageBuilder : public IEmpWageBuilder
