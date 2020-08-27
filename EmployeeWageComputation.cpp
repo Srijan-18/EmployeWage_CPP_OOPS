@@ -4,7 +4,12 @@
 
 using namespace std;
 
-void registerCompanies(EmployeeWageBuilder *employeeWageBuilder)
+void presentWelcomeMessage()
+{
+    cout << "WELCOME TO EMPLOYEE WAGE COMPUTATION PROGRAM." << endl;
+}
+
+void registerCompanies(IEmpWageBuilder *employeeWageBuilder)
 {
 
     int company1Information[3] = {20, 100, 20};
@@ -19,13 +24,11 @@ void registerCompanies(EmployeeWageBuilder *employeeWageBuilder)
 
 int main()
 {
-    cout << "WELCOME TO EMPLOYEE WAGE COMPUTATION PROGRAM." << endl;
+    presentWelcomeMessage();
 
-    EmployeeWageBuilder employeeWageBuilder;
-
-    registerCompanies(&employeeWageBuilder);
-
-    employeeWageBuilder.generateMonthlyWage();
+    IEmpWageBuilder *employeeWageBuilder = new EmployeeWageBuilder();
+    registerCompanies(employeeWageBuilder);
+    employeeWageBuilder->generateMonthlyWage();
 
     return 0;
 }

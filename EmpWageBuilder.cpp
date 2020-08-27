@@ -1,10 +1,11 @@
 #include <iostream>
 #include <ctime>
-#include "company.cpp"
+#include "IEmpWageBuilder.cpp"
+
 
 using namespace std;
 
-class EmployeeWageBuilder
+class EmployeeWageBuilder : public IEmpWageBuilder
 {
     int dailyWage = 0, dailyHours = 0;
     int dayCount, monthlyWage, hoursCount;
