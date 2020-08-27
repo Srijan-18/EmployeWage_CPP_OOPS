@@ -42,22 +42,15 @@ class EmployeeWageCalculator
         return dailyHours;
     }
 
-    int getDailyWage()
+    inline int getDailyWage()
     {
         dailyWage = dailyHours * WAGE_PER_HOUR;
         return dailyWage;
     }
 
-    void updateTotalWageOfCompany(Company *currentCompany)
+    inline void updateTotalWageOfCompany(Company *currentCompany)
     {
         currentCompany->totalWage += monthlyWage;
-    }
-
-    void displayHeader()
-    {
-        cout << "\n\tDAY\t\tWORKING HOURS\t\tTODAY'S WAGE" << endl;
-        cout << "\t===\t\t=============\t\t============\n"
-             << endl;
     }
 
     void generateEmpWageForCompany(Company *currentCompany)
@@ -72,7 +65,7 @@ class EmployeeWageCalculator
         }
     }
 
-    void updateCalculationParameters(Company currentCompany)
+    inline void updateCalculationParameters(Company currentCompany)
     {
         dayCount = 0;
         monthlyWage = 0;
