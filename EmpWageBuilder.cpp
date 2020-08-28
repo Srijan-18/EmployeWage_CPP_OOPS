@@ -18,7 +18,7 @@ class EmployeeWageBuilder : public IEmpWageBuilder
         return rand() % 3;
     }
 
-    inline int generatedDailyWorkingHours()
+    inline int getDailyWorkingHours()
     {
         const int FULL_TIME = 1;
         const int PART_TIME = 2;
@@ -47,16 +47,11 @@ class EmployeeWageBuilder : public IEmpWageBuilder
         return dailyWage;
     }
 
-    inline void updateTotalWageOfCompany(Company *currentCompany)
-    {
-        currentCompany->totalWage += monthlyWage;
-    }
-
     void generateEmpWageForCompany(Company *currentCompany)
     {
         currentCompany->displayDetails();
 
-        for (int employee = 0; employee < currentCompany->employeeCounter; employee++)
+        for (int employee = 0; employee < currentCompany->getEmployeeCounter(); employee++)
         {
             updateCalculationParameters(*currentCompany);
             generateWageForEmployee(&(currentCompany->employees[employee]));
@@ -64,26 +59,32 @@ class EmployeeWageBuilder : public IEmpWageBuilder
         }
     }
 
+    inline void updateTotalWageOfCompany(Company *currentCompany)
+    {
+        currentCompany->setTotalWage(currentCompany->getTotalWage() + monthlyWage);
+    }
+
     inline void updateCalculationParameters(Company currentCompany)
     {
         dayCount = 0;
         monthlyWage = 0;
         hoursCount = 0;
-        MAX_WORKING_DAYS = currentCompany.MAX_WORKING_DAYS;
-        MAX_WORKING_HOURS = currentCompany.MAX_WORKING_HOURS;
-        WAGE_PER_HOUR = currentCompany.WAGE_PER_HOUR;
+        MAX_WORKING_DAYS = currentCompany.getMaxWorkingDays();
+        MAX_WORKING_HOURS = currentCompany.getMaxWorkingHours();
+        WAGE_PER_HOUR = currentCompany.getWagePerHour();
     }
 
     void generateWageForEmployee(Employee *employee)
     {
         while (dayCount < MAX_WORKING_DAYS && hoursCount < MAX_WORKING_HOURS)
         {
-            hoursCount += generatedDailyWorkingHours();
+            hoursCount += getDailyWorkingHours();
             dailyWage = getDailyWage();
             employee->updateDailyWage(dailyWage);
             monthlyWage += dailyWage;
             dayCount++;
         }
+       
         employee->setMonthlyWage(monthlyWage);
         employee->printDetails();
     }
@@ -103,6 +104,7 @@ void EmployeeWageBuilder::registerCompany(Company company)
 {
     companies.push_back(company);
     registerEmployees();
+
     companyCounter++;
 }
 
@@ -113,6 +115,6 @@ void EmployeeWageBuilder::generateMonthlyWage()
     for (int companyNumber = 0; companyNumber < companyCounter; companyNumber++)
     {
         generateEmpWageForCompany(&companies[companyNumber]);
-        cout << "\nTOTAL WAGE FOR COMPANY IS: " << companies[companyNumber].totalWage << endl;
+        cout << "\nTOTAL WAGE FOR COMPANY IS: " << companies[companyNumber].getTotalWage() << endl;
     }
 }

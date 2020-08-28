@@ -5,13 +5,14 @@ using namespace std;
 
 class Company
 {
-public:
     string companyName;
     int MAX_WORKING_DAYS;
     int MAX_WORKING_HOURS;
     int WAGE_PER_HOUR;
     int totalWage;
     int employeeCounter;
+
+public:
     Employee employees[5];
 
     Company()
@@ -26,6 +27,41 @@ public:
         WAGE_PER_HOUR = companyInformation[2];
         totalWage = 0;
         employeeCounter = 0;
+    }
+
+    void setEmployeeMonthlyWage(int monthlyWage)
+    {
+        employees[employeeCounter - 1].setMonthlyWage(monthlyWage);
+    }
+
+    void setTotalWage(int updatedValue)
+    {
+        this->totalWage = updatedValue;
+    }
+
+    int getMaxWorkingDays()
+    {
+        return this->MAX_WORKING_DAYS;
+    }
+
+    int getMaxWorkingHours()
+    {
+        return this->MAX_WORKING_HOURS;
+    }
+
+    int getWagePerHour()
+    {
+        return this->WAGE_PER_HOUR;
+    }
+
+    int getEmployeeCounter()
+    {
+        return this->employeeCounter;
+    }
+
+    int getTotalWage()
+    {
+        return this->totalWage;
     }
 
     void displayDetails()
@@ -47,10 +83,5 @@ public:
     {
         for (int employee = 0; employee < employeeCounter; employee++)
             employees[employee].printDetails();
-    }
-
-    void setEmployeeMonthlyWage(int monthlyWage)
-    {
-        employees[employeeCounter - 1].setMonthlyWage(monthlyWage);
     }
 };
