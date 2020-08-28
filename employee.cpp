@@ -6,6 +6,7 @@ class Employee
 {
     int monthlyWage;
     string employeeName;
+    vector<int> dailyWage;
 
 public:
     Employee()
@@ -24,6 +25,11 @@ public:
         this->monthlyWage = monthlyWage;
     }
 
+    inline void updateDailyWage(int todaysWage)
+    {
+        dailyWage.push_back(todaysWage);
+    }
+
     string getEmployeeName()
     {
         return this->employeeName;
@@ -33,9 +39,14 @@ public:
     {
         return this->monthlyWage;
     }
-    
+
     void printDetails()
     {
-        cout << "\nEMPLOYEE NAME: " << this->employeeName << "\t\tMONTHLY WAGE: " << this->monthlyWage << endl;
+        cout << "\nEMPLOYEE NAME: " << this->employeeName << endl;
+        
+        for(int dayCounter = 0; dayCounter < dailyWage.size(); dayCounter++)
+            cout << "\nDAY: " << dayCounter + 1 << "\t\t WAGE FOR TODAY: " << dailyWage[dayCounter] << endl;
+
+        cout << "\t\t*** MONTHLY WAGE: " << this->monthlyWage << " ***" << endl;
     }
 };

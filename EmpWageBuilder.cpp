@@ -79,7 +79,9 @@ class EmployeeWageBuilder : public IEmpWageBuilder
         while (dayCount < MAX_WORKING_DAYS && hoursCount < MAX_WORKING_HOURS)
         {
             hoursCount += generatedDailyWorkingHours();
-            monthlyWage += getDailyWage();
+            dailyWage = getDailyWage();
+            employee->updateDailyWage(dailyWage);
+            monthlyWage += dailyWage;
             dayCount++;
         }
         employee->setMonthlyWage(monthlyWage);
