@@ -49,9 +49,7 @@ class EmployeeWageBuilder : public IEmpWageBuilder
 
     void generateEmpWageForCompany(Company *currentCompany)
     {
-        currentCompany->displayDetails();
-
-        for (int employee = 0; employee < currentCompany->getEmployeeCounter(); employee++)
+        for (int employee = 0; employee < currentCompany->getEmployeeCount(); employee++)
         {
             updateCalculationParameters(*currentCompany);
             generateWageForEmployee(&(currentCompany->employees[employee]));
@@ -86,26 +84,26 @@ class EmployeeWageBuilder : public IEmpWageBuilder
         }
        
         employee->setMonthlyWage(monthlyWage);
-        employee->printDetails();
     }
 
     void registerEmployees()
     {
-        for (int employee = 0; employee < 2; employee++)
+        for (int employee = 0; employee < 2; employee++) 
             companies[companyCounter].registerEmployee("Employee_" + to_string(employee + 1));
     }
 
 public:
     void generateMonthlyWage();
     void registerCompany(Company company);
+    void displayWages();
 };
 
 void EmployeeWageBuilder::registerCompany(Company company)
 {
     companies.push_back(company);
     registerEmployees();
-
     companyCounter++;
+    this->generateMonthlyWage();
 }
 
 void EmployeeWageBuilder::generateMonthlyWage()
@@ -115,6 +113,10 @@ void EmployeeWageBuilder::generateMonthlyWage()
     for (int companyNumber = 0; companyNumber < companyCounter; companyNumber++)
     {
         generateEmpWageForCompany(&companies[companyNumber]);
-        cout << "\nTOTAL WAGE FOR COMPANY IS: " << companies[companyNumber].getTotalWage() << endl;
     }
+}
+
+void EmployeeWageBuilder::displayWages() {
+    for(int companyCount = 0; companyCount < companies.size(); companyCount++)
+        companies[companyCount].displayDetails();
 }

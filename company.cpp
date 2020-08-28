@@ -10,28 +10,39 @@ class Company
     int MAX_WORKING_HOURS;
     int WAGE_PER_HOUR;
     int totalWage;
-    int employeeCounter;
+    int employeeCount;
+
+    void takeInputForCompanyInformations()
+    {
+        cout << "\nENTER THE NAME OF THE COMPANY: ";
+        cin >> this->companyName;
+        cout << "\nENTER THE MAXIMUM WORKING DAYS IN A MONTH : ";
+        cin >> this->MAX_WORKING_DAYS;
+        cout << "\nENTER THE  MAXIMUM WORKING HOURS IN A MONTH : ";
+        cin >> this->MAX_WORKING_HOURS;
+        cout << "\nENTER THE WAGE PER HOUR : ";
+        cin >> this->WAGE_PER_HOUR;
+    }
+
+    void displayEmployeesDetails()
+    {
+        for (int employee = 0; employee < employeeCount; employee++)
+            employees[employee].printDetails();
+    }
 
 public:
-    Employee employees[5];
+    Employee employees[3];
 
     Company()
     {
-    }
-
-    Company(string companyName, int companyInformation[])
-    {
-        this->companyName = companyName;
-        MAX_WORKING_DAYS = companyInformation[0];
-        MAX_WORKING_HOURS = companyInformation[1];
-        WAGE_PER_HOUR = companyInformation[2];
-        totalWage = 0;
-        employeeCounter = 0;
+        takeInputForCompanyInformations();
+        this->totalWage = 0;
+        this->employeeCount = 0;
     }
 
     void setEmployeeMonthlyWage(int monthlyWage)
     {
-        employees[employeeCounter - 1].setMonthlyWage(monthlyWage);
+        employees[employeeCount - 1].setMonthlyWage(monthlyWage);
     }
 
     void setTotalWage(int updatedValue)
@@ -54,9 +65,9 @@ public:
         return this->WAGE_PER_HOUR;
     }
 
-    int getEmployeeCounter()
+    int getEmployeeCount()
     {
-        return this->employeeCounter;
+        return this->employeeCount;
     }
 
     int getTotalWage()
@@ -66,22 +77,20 @@ public:
 
     void displayDetails()
     {
-        cout << "\n====================== " << this->companyName << " ======================\n"
+        cout << "\n====================== " << "COMPANY NAME: " << this->companyName << " ======================\n"
              << endl;
         cout << "MAXIMUM WORKING DAYS: " << this->MAX_WORKING_DAYS << endl;
         cout << "MAXIMUM WORKING HOURS: " << this->MAX_WORKING_HOURS << endl;
         cout << "WAGE PER HOUR: " << this->WAGE_PER_HOUR << endl;
+
+        displayEmployeesDetails();
+
+        cout << "\nTOTAL WAGE FOR COMPANY IS: " << this->totalWage << endl;
     }
 
     void registerEmployee(string name)
     {
-        employees[employeeCounter].setEmployeeName(name);
-        employeeCounter++;
-    }
-
-    void displayEmployeesDetails()
-    {
-        for (int employee = 0; employee < employeeCounter; employee++)
-            employees[employee].printDetails();
+        this->employees[this->employeeCount].setEmployeeName(name);
+        this->employeeCount++;
     }
 };

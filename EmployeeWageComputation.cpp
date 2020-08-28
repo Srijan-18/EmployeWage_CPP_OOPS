@@ -9,26 +9,46 @@ void presentWelcomeMessage()
     cout << "WELCOME TO EMPLOYEE WAGE COMPUTATION PROGRAM." << endl;
 }
 
-void registerCompanies(IEmpWageBuilder *employeeWageBuilder)
+void addCompany(IEmpWageBuilder *employeeWageBuilder)
 {
+    Company company;
+    employeeWageBuilder->registerCompany(company);
+}
 
-    int company1Information[3] = {20, 100, 20};
-    Company company1("Company1", company1Information);
+void presentChoices()
+{
+    IEmpWageBuilder *employeeWageBuilder = new EmployeeWageBuilder();
+    addCompany(employeeWageBuilder);
 
-    int company2Information[3] = {10, 50, 50};
-    Company company2("Company2", company2Information);
+    const int ADD_COMPANY = 1;
+    const int DISPLAY_WAGES = 2;
+    bool flag = true;
 
-    employeeWageBuilder->registerCompany(company1);
-    employeeWageBuilder->registerCompany(company2);
+    while (flag)
+    {
+        int choice;
+
+        cout << "\n\t\t****\nENTER 1 TO ADD A NEW COMPANY.\nENTER 2 TO DISPLAY WAGES.\nANY OTHER OT EXIT.\n\t\t****\n\nYOUR CHOICE: ";
+        cin >> choice;
+        switch (choice)
+        {
+        case ADD_COMPANY:
+            addCompany(employeeWageBuilder);
+            break;
+        case DISPLAY_WAGES:
+            employeeWageBuilder->displayWages();
+            break;
+        default:
+            flag = false;
+        }
+    }
 }
 
 int main()
 {
     presentWelcomeMessage();
 
-    IEmpWageBuilder *employeeWageBuilder = new EmployeeWageBuilder();
-    registerCompanies(employeeWageBuilder);
-    employeeWageBuilder->generateMonthlyWage();
+    presentChoices();
 
     return 0;
 }
