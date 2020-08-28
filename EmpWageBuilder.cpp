@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ctime>
+#include <vector>
 #include "IEmpWageBuilder.cpp"
 
 using namespace std;
@@ -10,7 +11,7 @@ class EmployeeWageBuilder : public IEmpWageBuilder
     int dayCount, monthlyWage, hoursCount;
     int MAX_WORKING_DAYS, MAX_WORKING_HOURS, WAGE_PER_HOUR;
     int companyCounter = 0;
-    Company company[5];
+    vector<Company> companies;
 
     inline int getAttendance()
     {
@@ -88,7 +89,7 @@ class EmployeeWageBuilder : public IEmpWageBuilder
     void registerEmployees()
     {
         for (int employee = 0; employee < 2; employee++)
-            company[companyCounter].registerEmployee("Employee_" + to_string(employee + 1));
+            companies[companyCounter].registerEmployee("Employee_" + to_string(employee + 1));
     }
 
 public:
@@ -98,7 +99,7 @@ public:
 
 void EmployeeWageBuilder::registerCompany(Company company)
 {
-    this->company[companyCounter] = company;
+    companies.push_back(company);
     registerEmployees();
     companyCounter++;
 }
@@ -109,7 +110,7 @@ void EmployeeWageBuilder::generateMonthlyWage()
 
     for (int companyNumber = 0; companyNumber < companyCounter; companyNumber++)
     {
-        generateEmpWageForCompany(&company[companyNumber]);
-        cout << "\nTOTAL WAGE FOR COMPANY IS: " << company[companyNumber].totalWage << endl;
+        generateEmpWageForCompany(&companies[companyNumber]);
+        cout << "\nTOTAL WAGE FOR COMPANY IS: " << companies[companyNumber].totalWage << endl;
     }
 }
