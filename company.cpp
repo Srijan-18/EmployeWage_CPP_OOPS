@@ -74,10 +74,16 @@ public:
     {
         return this->totalWage;
     }
+    
+    string getCompanyName()
+    {
+        return this->companyName;
+    }
 
     void displayDetails()
     {
-        cout << "\n====================== " << "COMPANY NAME: " << this->companyName << " ======================\n"
+        cout << "\n====================== "
+             << "COMPANY NAME: " << this->companyName << " ======================\n"
              << endl;
         cout << "MAXIMUM WORKING DAYS: " << this->MAX_WORKING_DAYS << endl;
         cout << "MAXIMUM WORKING HOURS: " << this->MAX_WORKING_HOURS << endl;

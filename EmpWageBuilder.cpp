@@ -82,20 +82,29 @@ class EmployeeWageBuilder : public IEmpWageBuilder
             monthlyWage += dailyWage;
             dayCount++;
         }
-       
+
         employee->setMonthlyWage(monthlyWage);
     }
 
     void registerEmployees()
     {
-        for (int employee = 0; employee < 2; employee++) 
+        for (int employee = 0; employee < 2; employee++)
             companies[companyCounter].registerEmployee("Employee_" + to_string(employee + 1));
+    }
+
+    int getTotalWageForCompany(string companyName)
+    {
+        for (int companyCount = 0; companyCount < companies.size(); companyCount++)
+            if (companies[companyCount].getCompanyName() == companyName)
+                return companies[companyCount].getTotalWage();
+        return -1;
     }
 
 public:
     void generateMonthlyWage();
     void registerCompany(Company company);
     void displayWages();
+    void printTotalWage();
 };
 
 void EmployeeWageBuilder::registerCompany(Company company)
@@ -116,7 +125,17 @@ void EmployeeWageBuilder::generateMonthlyWage()
     }
 }
 
-void EmployeeWageBuilder::displayWages() {
-    for(int companyCount = 0; companyCount < companies.size(); companyCount++)
+void EmployeeWageBuilder::displayWages()
+{
+    for (int companyCount = 0; companyCount < companies.size(); companyCount++)
         companies[companyCount].displayDetails();
+}
+
+void EmployeeWageBuilder::printTotalWage()
+{
+    string companyName;
+    cout << "ENTER COMPANY NAME: ";
+    cin >> companyName;
+    int totalWage = getTotalWageForCompany(companyName);
+    (totalWage != -1) ? cout << "\nTOTAL WAGE FOR " << companyName << " IS : " << totalWage << endl : cout << "\nNO SUCH COMPANY PRESENT" << endl;
 }
