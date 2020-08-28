@@ -47,6 +47,6 @@ public:
         for(int dayCounter = 0; dayCounter < dailyWage.size(); dayCounter++)
             cout << "\nDAY: " << dayCounter + 1 << "\t\t WAGE FOR TODAY: " << dailyWage[dayCounter] << endl;
 
-        cout << "\t\t*** MONTHLY WAGE: " << this->monthlyWage << " ***" << endl;
+        cout << "\n\t\t*** MONTHLY WAGE: " << this->monthlyWage << " ***" << endl;
     }
 };
